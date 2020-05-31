@@ -3,8 +3,21 @@ type User {
     name: String!
     email: String!
     phone: String!
-    created_at: DateTime!
-    updated_at: DateTime!
+    created_at: String!
+    updated_at: String!
+}
+
+type OAuth {
+    token_type: String
+    access_token: String
+    refresh_token: String
+    expires_in: Int
+    user: User
+}
+
+input LoginByEmailInput {
+    email: String @rules(apply: ["required", "email"])
+    password: String @rules(apply: ["required"])
 }
 
 extend type Query {
@@ -12,6 +25,6 @@ extend type Query {
 }
 
 extend type Mutation {
-    loginByPhone(phone: String, password: String): User @field(resolver: "\\Alunos\\Users\\Mutations\\Users\\Login@byPhone")
+    loginByEmail(credentials: LoginByEmailInput): OAuth  @field(resolver: "\\Alunos\\Users\\Mutations\\Users\\LoginByEmail")
     signUp(name: String, phone: String, password: String, email: String): User @field(resolver: "\\Alunos\\Users\\Mutations\\Users\\SignUp")
 }

@@ -1,5 +1,7 @@
 <?php
 
+use Alunos\Users\Models\User;
+
 return [
 
     /*
@@ -68,7 +70,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => Alunos\Users\Models\User::class,
+            'model' => User::class,
         ],
 
         // 'users' => [
