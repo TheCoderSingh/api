@@ -7,7 +7,7 @@ use Laravel\Passport\Client;
 
 trait InteractsWithOauth
 {
-    private function requestPasswordGrant(string $username, string $password)
+    private function requestPasswordGrant(string $username, string $password, string $scope = '')
     {
         $client = Client
             ::where('password_client', true)
@@ -20,9 +20,10 @@ trait InteractsWithOauth
             'client_secret' => $client->secret,
             'username'      => $username,
             'password'      => $password,
-            'scope'         => '*',
+            'scope'         => $scope,
         ]);
 
+        // Internal request
         $response = app()
             ->handle($request)
             ->getContent();
