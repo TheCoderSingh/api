@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Providers;
+namespace Alunos\Profiles\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Alunos\Profiles\Providers\ModuleServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
+class ModuleServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
@@ -14,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->register(ModuleServiceProvider::class);
+        $this->app->register(GraphQLServiceProvider::class);
     }
 
     /**

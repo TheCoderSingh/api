@@ -2,7 +2,7 @@
 
 namespace Alunos\Users\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -42,4 +42,24 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'phone_verified_at' => 'datetime',
     ];
+
+    /**
+     * @return BelongsToMany
+     */
+    public function guardians()
+    {
+        return $this
+            ->belongsToMany(User::class, 'user_id', 'guardian_id')
+            ->withPivot('relation_type');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function children()
+    {
+        return $this
+            ->belongsToMany(User::class, 'guardian_id', 'user_id')
+            ->withPivot('relation_type');
+    }
 }
