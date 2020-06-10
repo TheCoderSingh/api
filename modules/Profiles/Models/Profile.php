@@ -3,10 +3,11 @@
 namespace Alunos\Profiles\Models;
 
 use Alunos\Foods\Models\Food;
+use Alunos\Users\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Profile extends Model
 {
@@ -49,10 +50,10 @@ class Profile extends Model
     }
 
     /**
-     * @return MorphTo
+     * @return BelongsTo
      */
-    public function profilable(): MorphTo
+    public function user(): BelongsTo
     {
-        return $this->morphTo();
+        return $this->belongsTo(User::class);
     }
 }

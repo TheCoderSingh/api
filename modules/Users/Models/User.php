@@ -2,7 +2,9 @@
 
 namespace Alunos\Users\Models;
 
+use Alunos\Profiles\Models\Profile;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -46,7 +48,7 @@ class User extends Authenticatable
     /**
      * @return BelongsToMany
      */
-    public function guardians()
+    public function guardians(): BelongsToMany
     {
         return $this
             ->belongsToMany(User::class, 'user_id', 'guardian_id')
@@ -56,10 +58,18 @@ class User extends Authenticatable
     /**
      * @return BelongsToMany
      */
-    public function children()
+    public function children(): BelongsToMany
     {
         return $this
             ->belongsToMany(User::class, 'guardian_id', 'user_id')
             ->withPivot('relation_type');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function profile(): HasOne
+    {
+        return $this->hasOne(Profile::class);
     }
 }

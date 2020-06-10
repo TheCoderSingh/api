@@ -9,6 +9,7 @@ class CreateProfileTable extends Migration {
 	{
 		Schema::create('profile', function(Blueprint $table) {
 			$table->increments('id');
+            $table->integer('user_id')->unsigned();
 			$table->morphs('profilable');
 			$table->text('biography');
 			$table->string('allergies');

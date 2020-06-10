@@ -13,6 +13,11 @@ class CreateForeignKeys extends Migration {
 						->onDelete('restrict')
 						->onUpdate('restrict');
 		});
+        Schema::table('profile', function(Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
+        });
 		Schema::table('profile', function(Blueprint $table) {
 			$table->foreign('country_id')->references('id')->on('countries')
 						->onDelete('restrict')
@@ -165,6 +170,9 @@ class CreateForeignKeys extends Migration {
 		Schema::table('domains', function(Blueprint $table) {
 			$table->dropForeign('domains_tenant_id_foreign');
 		});
+        Schema::table('profile', function(Blueprint $table) {
+            $table->dropForeign('profile_user_id_foreign');
+        });
 		Schema::table('profile', function(Blueprint $table) {
 			$table->dropForeign('profile_country_id_foreign');
 		});
