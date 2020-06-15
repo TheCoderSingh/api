@@ -3,7 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Alunos\Profiles\Providers\ModuleServiceProvider;
+use Alunos\Households\Providers\ModuleServiceProvider as HouseholdServiceProvider;
+use Alunos\Profiles\Providers\ModuleServiceProvider as ProfileServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,7 +15,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->register(ModuleServiceProvider::class);
+        $this->app->register(ProfileServiceProvider::class);
+        $this->app->register(HouseholdServiceProvider::class);
     }
 
     /**

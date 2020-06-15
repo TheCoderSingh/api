@@ -1,0 +1,47 @@
+type Household {
+    id: ID!
+    name: String!
+    type: HouseholdType!
+    rules: [Rule] @hasMany
+    members: [Member] @hasMany
+    rooms: [Room] @hasMany
+    address: String!
+    created_at: String!
+    updated_at: String!
+}
+
+type Member {
+    user: User @belongsTo
+    is_permanent: Boolean
+    is_admin: Boolean
+}
+
+type Issue {
+    description: String!
+    author: Member!
+    solved_at: DateTime
+}
+
+type Announcement {
+    content: String!
+}
+
+type Room {
+    name: String!
+}
+
+type Rule {
+    description: String!
+}
+
+type Activity {
+    description: String!
+}
+
+extend type Query {
+    "Get details for household"
+    household(
+        "Household unique identifier"
+        household_id: ID @eq(key: "id")
+    ): Household @first(model: "\\Alunos\\Households\\Models\\Household")
+}

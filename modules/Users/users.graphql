@@ -1,8 +1,11 @@
 type User {
     id: ID!
-    name: String!
+    first_name: String!
+    last_name: String!
+    display_name: String! @method(name: "getDisplayName")
     email: String!
     phone: String!
+    avatar: String!
     created_at: String!
     updated_at: String!
 }
@@ -25,6 +28,6 @@ extend type Query {
 }
 
 extend type Mutation {
-    loginByEmail(credentials: LoginByEmailInput): OAuth  @field(resolver: "\\Alunos\\Users\\Mutations\\Users\\LoginByEmail")
-    signUp(name: String, phone: String, password: String, email: String): User @field(resolver: "\\Alunos\\Users\\Mutations\\Users\\SignUp")
+    loginByEmail(credentials: LoginByEmailInput): OAuth  @field(resolver: "\\Alunos\\Users\\Mutations\\LoginByEmail")
+    signUp(name: String, phone: String, password: String, email: String): User @field(resolver: "\\Alunos\\Users\\Mutations\\SignUp")
 }

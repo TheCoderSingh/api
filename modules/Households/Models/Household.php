@@ -55,4 +55,12 @@ class Household extends Model
     {
         return $this->hasMany(HouseholdIssue::class);
     }
+
+    /**
+     * @return HasMany
+     */
+    public function rules(): HasMany
+    {
+        return $this->hasMany(HouseholdRule::class);
+    }
 }

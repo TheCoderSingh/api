@@ -16,9 +16,10 @@ class CreateUsersTable extends Migration {
 			$table->string('avatar')->nullable();
 			$table->string('first_name');
 			$table->string('last_name');
-			$table->softDeletes();
+            $table->string('display_name')->nullable();
 			$table->string('password');
 			$table->rememberToken('rememberToken');
+            $table->softDeletes();
 			$table->timestamps();
 		});
 	}

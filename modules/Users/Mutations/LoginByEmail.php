@@ -1,6 +1,6 @@
 <?php
 
-namespace Alunos\Users\Mutations\Users;
+namespace Alunos\Users\Mutations;
 
 use Alunos\Users\Traits\InteractsWithOauth;
 use App\Exceptions\ValidationException;

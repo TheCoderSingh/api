@@ -1,12 +1,12 @@
 <?php
 
-namespace Alunos\Users\Mutations\Users;
+namespace Alunos\Households\Queries;
 
-use Alunos\Users\Models\User;
+use Alunos\Households\Models\Household;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
-class SignUp
+class GetHouseholdById
 {
     /**
      * Return a value for the field.
@@ -19,6 +19,6 @@ class SignUp
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        return User::create($args);
+        return Household::find(1);
     }
 }
