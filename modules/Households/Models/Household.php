@@ -2,6 +2,7 @@
 
 namespace Alunos\Households\Models;
 
+use Alunos\Contracts\Models\Contract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -15,6 +16,14 @@ class Household extends Model
         'type',
         'address',
     ];
+
+    /**
+     * @return HasMany
+     */
+    public function contracts()
+    {
+        return $this->hasMany(Contract::class);
+    }
 
     /**
      * @return HasMany

@@ -1,0 +1,40 @@
+type User {
+    id: ID!
+    first_name: String!
+    last_name: String!
+    display_name: String! @method(name: "getDisplayName")
+    email: String!
+    phone: String!
+    avatar: String!
+    created_at: String!
+    updated_at: String!
+}
+
+type OAuthToken {
+    token_type: String
+    access_token: String
+    refresh_token: String
+    expires_in: Int
+}
+
+type AdminAccess {
+    token: OAuthToken,
+    admin: Admin
+}
+
+type MemberAccess {
+    token: OAuthToken,
+    member: Member
+}
+
+input PasswordLoginInput {
+    email: String @rules(apply: ["required", "email"])
+    password: String @rules(apply: ["required"])
+}
+
+extend type Mutation {
+    loginAsAdmin(credentials: PasswordLoginInput): AdminAccess  @field(resolver: "\\Alunos\\Auth\\Mutations\\LoginAsAdmin")
+
+    requestLoginAsHouseholdMember(email: String): Boolean  @field(resolver: "\\Alunos\\Auth\\Mutations\\RequestLoginAsHouseholdMember")
+    loginAsHouseholdMember(token: String): MemberAccess  @field(resolver: "\\Alunos\\Auth\\Mutations\\LoginAsHouseholdMember")
+}

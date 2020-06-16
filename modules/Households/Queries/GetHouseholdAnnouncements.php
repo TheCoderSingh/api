@@ -2,11 +2,11 @@
 
 namespace Alunos\Households\Queries;
 
-use Alunos\Households\Models\Household;
+use Alunos\Households\Models\HouseholdAnnouncement;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
-class GetHouseholdById
+class GetHouseholdAnnouncements
 {
     /**
      * Return a value for the field.
@@ -19,6 +19,20 @@ class GetHouseholdById
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        return Household::find(1);
+        $announcements = HouseholdAnnouncement
+            ::with('author')
+            ->where('household_id', $args['household_id'])
+            ->orderByDesc('created_at')
+            ->paginate(
+                $args['limit'],
+                ['*'],
+                'page',
+                $args['page']
+            );
+
+        return [
+            'total' => $announcements->total(),
+            'items' => $announcements->items()
+        ];
     }
 }

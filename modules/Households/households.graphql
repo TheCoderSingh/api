@@ -12,6 +12,7 @@ type Household {
 
 type Member {
     user: User @belongsTo
+    household: Household @belongsTo
     is_permanent: Boolean
     is_admin: Boolean
 }
@@ -19,11 +20,22 @@ type Member {
 type Issue {
     description: String!
     author: Member!
-    solved_at: DateTime
+    solved_at: DateTimeTz
+}
+
+type IssuePagination {
+    total: Int
+    items: [Issue]
 }
 
 type Announcement {
     content: String!
+    author: User
+}
+
+type AnnouncementPagination {
+    total: Int
+    items: [Announcement]
 }
 
 type Room {
@@ -38,10 +50,53 @@ type Activity {
     description: String!
 }
 
+type ActivityPagination {
+    total: Int
+    items: [Activity]
+}
+
+
 extend type Query {
-    "Get details for household"
+    "Get details about household"
     household(
         "Household unique identifier"
         household_id: ID @eq(key: "id")
     ): Household @first(model: "\\Alunos\\Households\\Models\\Household")
+
+    "Get activities of household"
+    householdActivities(
+        "Household unique identifier"
+        household_id: ID
+
+        "Number of elements per page"
+        limit: Int = 10
+
+        "Page"
+        page: Int = 1
+    ): ActivityPagination @field(resolver: "\\Alunos\\Households\\Queries\\GetHouseholdActivities")
+
+    "Get announcements of household"
+    householdAnnouncements(
+        "Household unique identifier"
+        household_id: ID
+
+        "Number of elements per page"
+        limit: Int = 10
+
+        "Page"
+        page: Int = 1
+    ): AnnouncementPagination @field(resolver: "\\Alunos\\Households\\Queries\\GetHouseholdAnnouncements")
+
+
+    "Get announcements of household"
+    householdIssues(
+        "Household unique identifier"
+        household_id: ID
+
+        "Number of elements per page"
+        limit: Int = 10
+
+        "Page"
+        page: Int = 1
+    ): IssuePagination @field(resolver: "\\Alunos\\Households\\Queries\\GetHouseholdIssues")
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace Alunos\Users\Mutations;
+namespace Alunos\Households\Queries;
 
-use Alunos\Users\Models\User;
+use Alunos\Households\Models\HouseholdIssue;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
-class SignUp
+class GetHouseholdIssues
 {
     /**
      * Return a value for the field.
@@ -19,6 +19,20 @@ class SignUp
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        return User::create($args);
+        $announcements = HouseholdIssue
+            ::with('author')
+            ->where('household_id', $args['household_id'])
+            ->orderByDesc('created_at')
+            ->paginate(
+                $args['limit'],
+                ['*'],
+                'page',
+                $args['page']
+            );
+
+        return [
+            'total' => $announcements->total(),
+            'items' => $announcements->items()
+        ];
     }
 }

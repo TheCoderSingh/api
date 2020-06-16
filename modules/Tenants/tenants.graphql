@@ -1,0 +1,4 @@
+type Tenant {
+    name: String!
+    domain: String!
+}

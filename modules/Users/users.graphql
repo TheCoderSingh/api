@@ -10,24 +10,10 @@ type User {
     updated_at: String!
 }
 
-type OAuth {
-    token_type: String
-    access_token: String
-    refresh_token: String
-    expires_in: Int
-    user: User
-}
-
-input LoginByEmailInput {
-    email: String @rules(apply: ["required", "email"])
-    password: String @rules(apply: ["required"])
-}
-
 extend type Query {
     me: User @auth
 }
 
 extend type Mutation {
-    loginByEmail(credentials: LoginByEmailInput): OAuth  @field(resolver: "\\Alunos\\Users\\Mutations\\LoginByEmail")
-    signUp(name: String, phone: String, password: String, email: String): User @field(resolver: "\\Alunos\\Users\\Mutations\\SignUp")
+    signUp(name: String, phone: String, password: String, email: String): User @create
 }

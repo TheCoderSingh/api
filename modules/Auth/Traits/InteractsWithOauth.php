@@ -1,7 +1,8 @@
 <?php
 
-namespace Alunos\Users\Traits;
+namespace Alunos\Auth\Traits;
 
+use Exception;
 use Illuminate\Http\Request;
 use Laravel\Passport\Client;
 
@@ -13,6 +14,10 @@ trait InteractsWithOauth
             ::where('password_client', true)
             ->whereNull('user_id')
             ->first();
+
+        if ($client === null) {
+            throw new Exception('OAuth Password Grant client not defined');
+        }
 
         $request = Request::create('/oauth/token', 'POST', [
             'grant_type'    => 'password',

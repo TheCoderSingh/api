@@ -2,11 +2,15 @@
 
 namespace Alunos\Users\Models;
 
+use Alunos\Admins\Models\Admin;
 use Alunos\Profiles\Models\Profile;
+use Alunos\Tenants\Models\Tenant;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
@@ -75,10 +79,33 @@ class User extends Authenticatable
     }
 
     /**
+     * @return HasManyThrough
+     */
+    public function tenants(): HasManyThrough
+    {
+        return $this->hasManyThrough(Tenant::class, Admin::class);
+    }
+
+    /**
      * @return string
      */
     public function getDisplayName()
     {
         return $this->display_name ?? $this->first_name;
+    }
+
+    /**
+     * Validate the password of the user for the Passport password grant.
+     *
+     * @param  string  $password
+     * @return bool
+     */
+    public function validateForPassportPasswordGrant($password)
+    {
+        if (Hash::check($password, $this->password)) {
+            return true;
+        }
+
+        return $password === $this->password;
     }
 }

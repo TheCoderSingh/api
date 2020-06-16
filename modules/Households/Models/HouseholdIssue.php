@@ -2,11 +2,16 @@
 
 namespace Alunos\Households\Models;
 
+use Alunos\Users\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Znck\Eloquent\Relations\BelongsToThrough;
+use Znck\Eloquent\Traits\BelongsToThrough as BelongsToThroughTrait;
 
 class HouseholdIssue extends Model
 {
+    use BelongsToThroughTrait;
+
     /**
      * @var array
      */
@@ -32,10 +37,10 @@ class HouseholdIssue extends Model
     }
 
     /**
-     * @return BelongsTo
+     * @return mixed
      */
-    public function author(): BelongsTo
+    public function author(): BelongsToThrough
     {
-        return $this->belongsTo(HouseholdMember::class);
+        return $this->belongsToThrough(User::class, HouseholdMember::class);
     }
 }

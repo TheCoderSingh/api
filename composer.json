@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.2.5",
+        "php": "^7.4",
         "bensampo/laravel-enum": "^1.37",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
@@ -19,7 +19,9 @@
         "mll-lab/laravel-graphql-playground": "^2.1",
         "nuwave/lighthouse": "^4.13",
         "predis/predis": "^1.1",
-        "shipping-docker/vessel": "^5.0"
+        "shipping-docker/vessel": "^5.0",
+        "spatie/laravel-multitenancy": "^1.0",
+        "staudenmeir/belongs-to-through": "^2.5"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

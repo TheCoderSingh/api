@@ -3,8 +3,10 @@
 namespace Alunos\Admins\Models;
 
 use Alunos\Profiles\Models\Notification;
+use Alunos\Tenants\Models\Tenant;
 use Alunos\Users\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -30,11 +32,19 @@ class Admin extends Model
     }
 
     /**
-     * @return HasOne
+     * @return BelongsTo
      */
-    public function user(): HasOne
+    public function user(): BelongsTo
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function tenant(): BelongsTo
+    {
+        return $this->belongsTo(Tenant::class);
     }
 
     /**
@@ -52,4 +62,6 @@ class Admin extends Model
     {
         return $this->morphMany(Notification::class, 'notifiable');
     }
+
+    // @TODO Apply tenant global scope
 }

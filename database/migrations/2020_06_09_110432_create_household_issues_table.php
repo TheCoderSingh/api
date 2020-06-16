@@ -11,7 +11,7 @@ class CreateHouseholdIssuesTable extends Migration {
 			$table->integer('household_id')->unsigned();
 			$table->integer('household_member_id')->unsigned();
 			$table->string('description');
-			$table->datetime('solved_at');
+			$table->datetime('solved_at')->nullable();
 			$table->timestamps();
 			$table->increments('id');
 		});
